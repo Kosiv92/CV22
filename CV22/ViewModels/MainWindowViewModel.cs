@@ -19,8 +19,17 @@ namespace CV22.ViewModels
         {
             get => _Title;
             set => Set(ref _Title, value);
-           
+
         }
+
+        /// <summary>
+        /// Programm status
+        /// </summary>
+        public string Status { get => _Status; set => Set(ref _Status, value); }
         #endregion
+
+        private string _Status = "Готов!";
+
+
     }
 }
