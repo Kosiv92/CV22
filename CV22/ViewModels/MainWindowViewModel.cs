@@ -48,7 +48,7 @@ namespace CV22.ViewModels
 
         public MainWindowViewModel()
         {
-            CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
+            CloseApplicationCommand = new CommonCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
         }
 
     }

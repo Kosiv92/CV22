@@ -3,12 +3,12 @@ using System;
 
 namespace CV22.Infrastructure.Commands
 {
-    internal class LambdaCommand : Command
+    internal class CommonCommand : Command
     {
         private readonly Action<object> _Execute;
         private readonly Func<object, bool> _CanExecute;
 
-        public LambdaCommand(Action<object> Execute, Func<object, bool> CanExecute = null)
+        public CommonCommand(Action<object> Execute, Func<object, bool> CanExecute = null)
         {
             _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
             _CanExecute = CanExecute;
