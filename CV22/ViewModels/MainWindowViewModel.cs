@@ -33,15 +33,37 @@ namespace CV22.ViewModels
         public string Status { get => _Status; set => Set(ref _Status, value); }
         #endregion
 
+        #region TestDataPoints
+
         private IEnumerable<DataPoint> _TestDataPoints;
 
         public IEnumerable<DataPoint> TestDataPoints { get => _TestDataPoints; set => Set(ref _TestDataPoints, value); }
+
+        #endregion
+
+        private int _SelectedPageIndex;
+
+        /// <summary>
+        /// Number of selected tab
+        /// </summary>
+        public int SelectedPageIndex { get => _SelectedPageIndex; set => Set(ref _SelectedPageIndex, value); }
+
+        public ICommand ChangeTabIndexCommand { get; }
+
+        private bool CanChangeTabIndexCommandExecute(object p) => _SelectedPageIndex >= 0;
+
+        private void OnChangeTabIndexCommandExecute(object p)
+        {
+            if(p is null) return;
+            SelectedPageIndex += Convert.ToInt32(p);
+        }
 
         private string _Status = "Готов!";
 
         #region CloseApplicationCommand
 
         public ICommand CloseApplicationCommand { get; }
+        
 
         private void OnCloseApplicationCommandExecuted(object p)
         {
@@ -55,6 +77,7 @@ namespace CV22.ViewModels
         public MainWindowViewModel()
         {
             CloseApplicationCommand = new CommonCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
+            ChangeTabIndexCommand = new CommonCommand(OnChangeTabIndexCommandExecute, CanChangeTabIndexCommandExecute);
 
             var data_points = new List<DataPoint>((int) (360 / 0.1));
             
