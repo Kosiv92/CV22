@@ -81,6 +81,11 @@ namespace CV22.ViewModels
         #endregion
 
         public ObservableCollection<Group> Groups { get; }
+        public Group SelectedGroup { get => _SelectedGroup; set => Set(ref _SelectedGroup, value); }
+
+        private Group _SelectedGroup;
+
+        
 
         public MainWindowViewModel()
         {

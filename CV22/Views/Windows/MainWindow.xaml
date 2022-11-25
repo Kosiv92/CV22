@@ -60,8 +60,15 @@
                         <ColumnDefinition Width="250"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Header="Groups">
-                        <ListBox ItemsSource="{Binding Groups}" DisplayMemberPath="Name"/>
+                    <GroupBox Grid.Column="0" Header="Groups">
+                        <ListBox ItemsSource="{Binding Groups}"
+                                 DisplayMemberPath="Name"
+                                 SelectedItem="{Binding SelectedGroup}"/>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, FallbackValue='Students', TargetNullValue='Nope group selected'}">
+                        <DataGrid>
+                            
+                        </DataGrid>
                     </GroupBox>
                 </Grid>
             </TabItem>
