@@ -1,9 +1,11 @@
 ﻿using CV22.Infrastructure.Commands;
 using CV22.Models;
+using CV22.Models.Decanat;
 using CV22.ViewModels.Base;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +16,8 @@ namespace CV22.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+
+        private string _Status = "Готов!";
 
         #region WindowTitle
 
@@ -41,6 +45,8 @@ namespace CV22.ViewModels
 
         #endregion
 
+        #region ChangeTabs
+
         private int _SelectedPageIndex;
 
         /// <summary>
@@ -54,16 +60,16 @@ namespace CV22.ViewModels
 
         private void OnChangeTabIndexCommandExecute(object p)
         {
-            if(p is null) return;
+            if (p is null) return;
             SelectedPageIndex += Convert.ToInt32(p);
         }
 
-        private string _Status = "Готов!";
+        #endregion
 
         #region CloseApplicationCommand
 
         public ICommand CloseApplicationCommand { get; }
-        
+
 
         private void OnCloseApplicationCommandExecuted(object p)
         {
@@ -74,22 +80,44 @@ namespace CV22.ViewModels
 
         #endregion
 
+        public ObservableCollection<Group> Groups { get; }
+
         public MainWindowViewModel()
         {
             CloseApplicationCommand = new CommonCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
             ChangeTabIndexCommand = new CommonCommand(OnChangeTabIndexCommandExecute, CanChangeTabIndexCommandExecute);
 
-            var data_points = new List<DataPoint>((int) (360 / 0.1));
-            
+            var data_points = new List<DataPoint>((int)(360 / 0.1));
+
             for (var x = 0d; x <= 360; x += 0.1)
             {
                 const double to_rad = Math.PI / 180;
                 var y = Math.Sin(x * to_rad);
 
-                data_points.Add(new DataPoint { XValue= x, YValue = y});
+                data_points.Add(new DataPoint { XValue = x, YValue = y });
             }
 
-            TestDataPoints= data_points;
+            TestDataPoints = data_points;
+
+            var studen_index = 1;
+
+            var students = Enumerable.Range(1, 10).Select(i => new Student
+            {
+                Name = $"{studen_index}",
+                Surname = $"{studen_index}",
+                Patronymic = $"{studen_index++}",
+                BirthDay = DateTime.Now,
+                Rating = 0
+
+            }); ;
+
+            var groups = Enumerable.Range(1, 20).Select(i => new Group
+            {
+                Name = $"Group {i}",
+                Students = new ObservableCollection<Student>(students)
+            });
+
+            Groups = new ObservableCollection<Group>(groups);
         }
 
     }
