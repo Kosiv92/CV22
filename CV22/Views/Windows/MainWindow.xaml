@@ -62,12 +62,22 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Grid.Column="0" Header="Groups">
                         <ListBox ItemsSource="{Binding Groups}"
+                                 SelectedIndex="0"
                                  DisplayMemberPath="Name"
                                  SelectedItem="{Binding SelectedGroup}"/>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, FallbackValue='Students', TargetNullValue='Nope group selected'}">
-                        <DataGrid>
-                            
+                        <DataGrid ItemsSource="{Binding SelectedGroup.Students}"
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
+                                <DataGridTextColumn Header="Neme" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}"/>
+                                <DataGridTextColumn Header="Rating" Binding="{Binding Rating}"/>
+                                <DataGridTextColumn Header="Birthday" Binding="{Binding BirthDay, StringFormat=dd.MM.yyyy}"/>
+                                <!--<DataGridTextColumn Header="Group" Binding="{Binding DataContext.SelectedGroup.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>-->
+                            </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>
                 </Grid>
