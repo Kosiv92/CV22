@@ -10,6 +10,7 @@ namespace CV22.Models.Decanat
         public string Patronymic { get; set; }
         public DateTime BirthDay { get; set; }
         public double Rating { get; set; }
+        public string Description { get; set; }
 
     }
 

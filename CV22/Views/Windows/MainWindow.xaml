@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:vm="clr-namespace:CV22.ViewModels"
+        xmlns:decanat="clr-namespace:CV22.Models.Decanat"
         xmlns:cmd="clr-namespace:CV22.Infrastructure.Commands"
         xmlns:l="clr-namespace:CV22"   
         xmlns:oxy="http://oxyplot.org/wpf"
@@ -64,19 +65,30 @@
                         <ListBox ItemsSource="{Binding Groups}"
                                  SelectedIndex="0"
                                  DisplayMemberPath="Name"
-                                 SelectedItem="{Binding SelectedGroup}"/>
+                                 SelectedItem="{Binding SelectedGroup}"                                 />
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, FallbackValue='Students', TargetNullValue='Nope group selected'}">
                         <DataGrid ItemsSource="{Binding SelectedGroup.Students}"
                                   AutoGenerateColumns="False"
-                                  IsReadOnly="True">
+                                  IsReadOnly="True"
+                                  GridLinesVisibility="Vertical"
+                                  VerticalGridLinesBrush="AliceBlue"
+                                  AlternatingRowBackground="AliceBlue">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
                                 <DataGridTextColumn Header="Neme" Binding="{Binding Name}"/>
                                 <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}"/>
                                 <DataGridTextColumn Header="Rating" Binding="{Binding Rating}"/>
-                                <DataGridTextColumn Header="Birthday" Binding="{Binding BirthDay, StringFormat=dd.MM.yyyy}"/>
+                                <!--<DataGridTextColumn Header="Birthday" Binding="{Binding BirthDay, StringFormat=dd.MM.yyyy}"/>-->
                                 <!--<DataGridTextColumn Header="Group" Binding="{Binding DataContext.SelectedGroup.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>-->
+                                <DataGridTemplateColumn Header="Birth Date">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="decanat:Student">
+                                            <DatePicker SelectedDate="{Binding BirthDay}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Info" Binding="{Binding Description}" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>
