@@ -90,7 +90,40 @@
                              Grid.Column="0">                            
                         </ListBox>
                     </GroupBox>
-                    <GroupBox Grid.Column="1" Header="Selected Item">
+                    <GroupBox Grid.Column="1">
+                        <GroupBox.Header>
+                            <TextBlock Text="SelectedItem" Foreground="White"/>
+                        </GroupBox.Header>
+                        <GroupBox.Resources>
+                            <DataTemplate DataType="{x:Type decanat:Group}">
+                                <TextBlock Text="{Binding Name, StringFormat=Group: {0}}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="30"/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type decanat:Student}">
+                                <TextBlock Text="{Binding Name, StringFormat=Student: {0}}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="30"/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type sys:String}">
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="30">
+                                    <Run Foreground="Red" FontWeight="Bold">String:</Run>
+                                    <TextBlock Text="{Binding}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type sys:Int32}">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="30">
+                                    Digit: <TextBlock Text="{Binding}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GroupBox.Resources>
                         <ContentControl Content="{Binding SelectedCompositeValue}"/>
                     </GroupBox>
                 </Grid>
