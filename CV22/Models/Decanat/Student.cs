@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace CV22.Models.Decanat
 {
@@ -12,11 +11,5 @@ namespace CV22.Models.Decanat
         public double Rating { get; set; }
         public string Description { get; set; }
 
-    }
-
-    internal class Group
-    {
-        public string Name { get; set; }
-        public ICollection<Student> Students { get;set; }
     }
 }

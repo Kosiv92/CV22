@@ -80,8 +80,19 @@ namespace CV22.ViewModels
 
         #endregion
 
+        #region DifferentData
+
+        public object[] CompositeCollection { get; }
+
+        private object _SelectedCompositeValue;
+
+        public object SelectedCompositeValue { get => _SelectedCompositeValue; set => Set(ref _SelectedCompositeValue, value); }
+
+        #endregion
+
         public ObservableCollection<Group> Groups { get; }
         public Group SelectedGroup { get => _SelectedGroup; set => Set(ref _SelectedGroup, value); }
+        
 
         private Group _SelectedGroup;
 
@@ -123,7 +134,16 @@ namespace CV22.ViewModels
             });
 
             Groups = new ObservableCollection<Group>(groups);
-        }
 
+            var data_list = new List<object>();
+
+            data_list.Add("Hello World!");
+            data_list.Add(42);
+            var group = Groups[1];
+            data_list.Add(group);
+            data_list.Add(group.Students[0]);
+
+            CompositeCollection = data_list.ToArray();
+        }
     }
 }
