@@ -135,19 +135,25 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <GroupBox Grid.Column="0" Header="Groups">
-                        <ListBox ItemsSource="{Binding Groups}"
+                        <DockPanel>
+                            <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
+                                <Button Content="Add" Margin="0,0,3,0" Command="{Binding CreateGroupCommand}"/>
+                                <Button Content="Delete" Command="{Binding DeleteGroupCommand}" CommandParameter="{Binding SelectedGroup}"/>
+                            </UniformGrid>
+                            <ListBox ItemsSource="{Binding Groups}"
                                  SelectedIndex="0"                                 
                                  SelectedItem="{Binding SelectedGroup}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate DataType="decanat:Group">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Name}"/>
-                                        <TextBlock Text="{Binding Students.Count, StringFormat=Students:{0}}"
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="decanat:Group">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}"/>
+                                            <TextBlock Text="{Binding Students.Count, StringFormat=Students:{0}}"
                                                    Margin="3,0,0,0"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DockPanel>                                       
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, FallbackValue='Students', TargetNullValue='Nope group selected'}">
                         <DataGrid ItemsSource="{Binding SelectedGroup.Students}"

@@ -90,18 +90,56 @@ namespace CV22.ViewModels
 
         #endregion
 
+        #region Groups and students
         public ObservableCollection<Group> Groups { get; }
         public Group SelectedGroup { get => _SelectedGroup; set => Set(ref _SelectedGroup, value); }
-        
 
         private Group _SelectedGroup;
 
-        
+        #region CreateGroupCommand
+
+        public ICommand CreateGroupCommand { get; }                
+
+        private bool CanCreateGroupCommand(object p) => true;
+
+        private void OnCreateGroupCommandExecuted(object p)
+        {
+            var groupMaxIndex = Groups.Count + 1;
+            var newGroup = new Group
+            {
+                Name = $" Group {groupMaxIndex}",
+                Students = new ObservableCollection<Student>()
+            };
+
+            Groups.Add(newGroup);
+        }
+
+        #endregion
+
+        #region RemoveGroupCommand
+
+        public ICommand DeleteGroupCommand { get; }
+
+        private bool CanDeleteGroupCommand(object p) => p is Group group && Groups.Contains(group);
+
+        private void OnDeleteGroupCommandExecuted(object p)
+        {
+            if (!(p is Group group)) return;
+            var indexOfGroup = Groups.IndexOf(group);
+            Groups.Remove(group);
+            if(indexOfGroup < Groups.Count) SelectedGroup = Groups[indexOfGroup];
+        }
+        #endregion
+
+        #endregion
+
 
         public MainWindowViewModel()
         {
             CloseApplicationCommand = new CommonCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
             ChangeTabIndexCommand = new CommonCommand(OnChangeTabIndexCommandExecute, CanChangeTabIndexCommandExecute);
+            CreateGroupCommand = new CommonCommand(OnCreateGroupCommandExecuted, CanCreateGroupCommand);
+            DeleteGroupCommand = new CommonCommand(OnDeleteGroupCommandExecuted, CanDeleteGroupCommand);
 
             var data_points = new List<DataPoint>((int)(360 / 0.1));
 
@@ -125,7 +163,7 @@ namespace CV22.ViewModels
                 BirthDay = DateTime.Now,
                 Rating = 0
 
-            }); ;
+            });
 
             var groups = Enumerable.Range(1, 20).Select(i => new Group
             {
